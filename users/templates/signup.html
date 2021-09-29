@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+<!DOCTYPE html>
+
+<head>
+  <style>
+    /* 버튼 클릭시 색 변경 
+        a.active-color { color:#003b8d; } */
+
+    /* The switch - the box around the slider */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked+.slider {
+      background-color: #2196F3;
+    }
+
+    input:focus+.slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked+.slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+  </style>
+</head>
+
+{% block content %}
+
+<body>
+  <!--header-->
+  <div class="py-5 text-center">
+    <img class="d-block mx-auto mb-4" src="{% static 'images/logo1.png'%}" alt="로고" width="180" height="90">
+    <h2>회원가입</h2>
+  </div>
+
+  <!-- 회원가입 본문 -->
+    <form method="post">
+      {% csrf_token %}
+      {{form.as_p}}
+      <button type="submit">가입하기</button>
+    </form>
+
+
+</body>
+{% endblock %}

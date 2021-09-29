@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<head>
+    <style>
+
+        body{
+            background: whitesmoke;
+        }
+        p {
+            font-weight: bold;
+            text-align: right;
+            margin-right:80px;
+        }
+
+        h1{
+            text-align: center;
+        }
+
+        .content{
+            width:400px;
+            height: 300px;
+            margin: auto;
+            margin-top: 10%;
+            padding-top:30px;
+            border: 2px;
+            border-radius: 20px;
+            background:white;
+        }
+
+        .login{
+            display:block;
+            margin:0 auto;
+        }
+    </style>
+</head>
+
+
+<body>
+    <div class="content">
+        <h1>LOGIN</h1><br>
+        <form method="post">
+            {% csrf_token %}
+            {{form.as_p}}
+            <br>
+            <button class="login" type="submit">로그인</button>
+        </form>
+    </div>
+</body>
+{% endblock %}

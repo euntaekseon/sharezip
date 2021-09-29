@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Sharetalk{% endblock %}</title>
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/offcanvas/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="/docs/4.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    
+    <!-- Custom styles for this template -->
+    <link href="offcanvas.css" rel="stylesheet">
+   
+   <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+</head>
+
+<body> 
+    <main role="main" class="container">
+
+                <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-warning rounded shadow-sm">
+                  <img class="mr-3" src="{% static 'images/logo2.png'%}" alt="" width="48" height="48">
+                  <div class="lh-100">
+                    <h5 class="mb-0 text-white lh-100">쉐어톡</h6>
+                      메세지를 주고받은 사람의 "@아이디" 를 클릭하시면 다시 메세지를 주고받을 수 있습니다.
+                    <div class="text-white">{{ user.username }}</div>
+                  </div>
+                </div>
+              
+                <div class="my-3 p-3 rounded shadow-lg" >
+                  <h5 class="border-bottom border-gray pb-2 mb-0">최근 메세지</h5>
+                    {% for who, body in message %}
+                    <div class="media text-muted pt-3">
+                      <p class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
+                      <strong><a href="{% url 'mdetail' user.username who %}">@{{who}}</a></strong>
+                      {% for i in body %}
+                      {{i}}<br>
+                      {% endfor %}
+                      </p>
+                    </div>
+                    {% endfor %}     
+                </div>
+    </main>
+</body>
+</html>
+{% endblock %}

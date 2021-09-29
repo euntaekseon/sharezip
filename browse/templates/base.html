@@ -1,0 +1,201 @@
+{% load static %}
+<!doctype html>
+<html lang="Ko">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+  <meta name="generator" content="Jekyll v3.8.5">
+  <title>{% block title %}sharezipmain{% endblock %}</title>
+  <link rel="stylesheet" href="../../static/css/work.css?ver=1.2">
+  <!--bootstrap cdn 입니다. -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <!--js 다운 파일입니다. -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+  <!-- ws style from url -->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>W3.CSS Template</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-family: "Raleway", Arial, Helvetica, sans-serif
+    }
+   
+.m-md-5 {
+    margin: 0!important;
+}
+    
+  </style>
+  <script type="text/javascript" charset="UTF-8" src="./findroom_files/common.js"></script>
+  <script type="text/javascript" charset="UTF-8" src="./findroom_files/util.js"></script>
+</head>
+
+<body>
+
+
+  <!-- nav bar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% url 'base' %}">SHAREZIP</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'hosting1' %}">호스팅하기 <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'findroom' %}">둘러보기</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'myrooms' user.username %}">내 계정</a>
+        </li>
+        <input type="hidden" name=username value="{{user.username}}">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'mbox' user.username %}" tabinde="-1" aria-disabled="true">쉐어톡</a>
+        </li>
+
+        {% endif %}
+      </ul>
+    </div>
+
+    <form class="form-inline mt-2 mt-md-0">
+      {% if user.is_authenticated %}
+      <div class="mr-sm-2">환영합니다! {{ user.username }}님</div>
+      <a href="{% url 'logout' %}" class="btn btn-outline-warning my-2 my-sm-0">logout</a>
+
+      {% else %}
+      <div class="mr-sm-2">로그인 해주세요!</div>
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <a href="{% url 'login' %}" class="btn btn-outline-warning my-2 my-sm-0"> login</a>
+        <a href="{% url 'signup' %}" class="btn btn-outline-warning my-2 my-sm-0">sign up</a>
+      </div>
+
+      {% endif %}
+    </form>
+  </nav>
+
+
+  {% block content %}
+
+  <!-- <div class="container"> -->
+
+    <!--메인 화면-->
+    <div class="position-relative overflow-hidden p-5 p-md-7 m-md-5 text-center bg-light">
+      <div class="col-md-9 p-lg-5 mx-auto my-5">
+        <img src="{% static 'images/logo1.png'%}" width="400" height="200">
+        <p class="lead font-weight-normal">대학생에 의한 <br> 대학생을 위한 <br> 주택공유서비스 </p>
+        <input type="button" class="btn btn-lg btn-secondary" value="호스팅하기"
+          onclick="location.href='{% url 'hosting1' %}'">
+        <input type="button" class="btn btn-lg btn-secondary" value="둘러보기"
+          onclick="location.href='{% url 'findroom' %}'">
+      </div>
+    </div>
+
+    <!--방 몇개 보여주기-->
+    <hr class="mb-4">
+<div class="container">
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">"쉐어집"의 시작 <span class="text-muted">대학생주거의 새로운 패러다임</span>
+        </h2>
+        <p class="lead">" 방학 때 어디에서 살지 막막하진 않으신가요? "<br> "장기간 집을 비울 때 계약 걱정이 되곤 하시죠?"<br>
+          이런 고민을 덜어주고자 쉐어집이 탄생했습니다. 학생들이 ‘직접’ 자신의 방의 새로운 주인, 대여자, 룸메이트를 찾는 대학생만을 위한 주거 공유 플랫폼!<br>
+          전부터 학교 커뮤니티, 장터게시판에는 수많은 학생들이 각자 다른 이유로(군입대, 휴학, 개인사정 등) 자신의 방을 거래 혹은 공유할 임차인을 찾고 있었습니다.
+          <br> 쉐어집은 보다 편리하게 대학생들의 목적에 맞는 주거환경 및 정보를 지원해주기 위해 고안해 낸 플랫폼입니다.
+      </div>
+      <div class="col-md-5">
+        <img src="{% static 'images/main1.png' %}" width="350" height="350" focusable="false" role="img"
+          aria-label="Placeholder: 500x500">
+        </img>
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">거래+공유 <span class="text-muted">두마리의 토끼 잡기</span></h2>
+        <p class="lead"><br>첫번째, 양도처럼 자신이 살고 있는 집을 쉽고 빠르게 다른 대학생과 거래할 수 있습니다.
+          <br>두번째, 자신의 방을 다른 대학생들에게 공유(장기대여, 룸메이트)할 수 있습니다. 
+          여러 이유로 장기간 방을 비울 때 자신의 방을 장기 대여해줌으로써 대학생들이 서로 상생할 수 있습니다. 또한 혼자 살기 부담스러운 가격의 주거의 경우 룸메이트를 찾을 수 있습니다. </p>
+        </p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <img src="{% static 'images/main2.png' %}" width="350" height="350" focusable="false" role="img"
+          aria-label="Placeholder: 500x500">
+        </img>
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">목적에 맞는 사용 <span class="text-muted">양도, 거래 그리고 룸메이트</span></h2>
+        <p class="lead"> 호스터와 유저의 목적에 맞게 다양한 주거유형을 공유할 수 있습니다. 빌라, 오피스텔, 아파트 등 현재 대학생들이 가장 보편적으로 거주하고있는
+          주거유형에 맞게 방을 볼 수 있습니다. <br>또한 양도, 장기대여와 같은 거래부터 함께 생활할 룸메이트까지 구할 수 있습니다. <br>
+          뿐만 아니라 학교 주변으로 방을 검색할 수 있어, 대학생들의 통학, 생활 등 실질적 조건을 고려한 집을 구하기에 최적화 되어있습니다.</p>
+      </div>
+      <div class="col-md-5">
+        <div class="col-md-5 order-md-1">
+          <img src="{% static 'images/main4.png' %}" width="350" height="350" focusable="false" role="img"
+            aria-label="Placeholder: 500x500">
+          </img>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  </div>
+  <!--container-->
+  {% endblock %}
+</body>
+
+<!-- Footer -->
+<br><br><br>
+<footer class="w3-padding-32 w3-black w3-center w3-margin-top">
+  <h5>Find Us On</h5>
+  <div class="w3-xlarge w3-padding-16">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank"
+      class="w3-hover-text-green">sharezip</a></p>
+</footer>
+
+
+</html>

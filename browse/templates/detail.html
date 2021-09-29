@@ -1,0 +1,366 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+
+<!doctype html>
+<html lang="ko">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        /* 버튼 */
+    #btn-container {
+      position: fixed;
+
+    }
+
+    img {
+      /* float: left;
+      width: auto;
+      height: auto;
+      max-width:200px;
+      max-height:140px; */
+      width: 100%;
+      height: 100%;
+    }
+
+    #grid-container {
+      display: grid;
+      grid-template-areas:
+        'main_photo photo1'
+        'main_photo photo2'
+        'main_info cost';   
+      grid-template-rows: 30% 30% 30%;
+      grid-template-columns: 60% 40%;
+      grid-gap: 5px;
+      padding: 10px;
+    }
+
+
+    #title { grid-area: title;  }
+
+    #main_photo { grid-area: main_photo;  }
+
+    #photo {
+      display: inline;
+      overflow: auto;
+    }
+
+    #main_info { grid-area: main_info;  }
+
+    .photo1,
+    .photo2 {
+      display: inline-block;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      width: 100%;
+    }
+
+    .photo1 {
+      grid-area: photo1;
+      float: left;
+    }
+
+    .photo2 {
+      grid-area: photo2;
+      float: right;
+    }
+
+    #cost {
+      grid-area: cost;
+      font-size: 50px;
+      text-align: center;
+    }
+
+    #detail {
+      grid-area: detail;
+    }
+
+    .address {
+      font-size: 25px;
+    }
+
+    .date {
+      font-size: 15px;
+    }
+
+    /* 버튼 */
+    button{
+      position:fixed;
+      right: 20px;
+      bottom: 30px;
+    }
+
+    #cost-container{
+      display: inline-block;
+    }
+
+    #cost1{
+      float:left;
+      margin-right: 20px;
+    }
+
+    #cost2{
+      float:right;
+      margin-left: 20px;
+    }
+
+    .content{
+      text-align: center;
+    }
+
+    .abtn{
+      position: fixed;
+      right: 20px;
+      bottom: 30px;
+      height: 30px;
+      width: fit-content;
+    }
+    .abtn:link, a:visited {
+    background-color: #ffc107;
+    border: none;
+    color: #FFFFFF;
+    padding: 2px 10px;
+    text-align: center;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-block;
+  }
+
+    .abtn:hover, a:active {
+      background-color: #ffc107;
+    }
+    .abtn:hover{
+      cursor:pointer;
+      background-color:#ffc107;
+    }
+
+    .icon{
+      height: 32px;
+      width: 32px;
+      float: left;
+      margin: 10px;
+    }
+
+    .alert-secondary{
+      font-size: 17px;
+      height: 52px;
+    }
+
+    #detail{
+      width: 500px;
+      min-width: 350px;
+      text-align: center;
+      margin: 0 auto;
+    }
+
+    #options{
+      display: inline;
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    </style>
+
+  </head>
+  <body>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    
+    <div id="btn-continer">
+        <a class="abtn" href="{% url 'new' room.creator %}">쪽지</a>
+    </div>
+
+    <div class="container">
+      <br><br>
+        <div id="grid-container">
+            <div class="grid" id="main_photo">
+                <img src="{{room.image1.url}}">
+            </div>
+        
+            {% if room.image2 %}
+            <div class="photo1"><img src="{{room.image2.url}}" id="img1"></div>
+            {% else %}
+            <div class="photo1"><img id="img1" src="{% static 'images/logo3.png'%}">
+            </div>
+            {% endif %}
+            {% if room.image3 %}
+            <div class="photo2"><img src="{{room.image3.url}}" id="img2"></div>
+            {% else %}
+            <div class="photo2">
+                <img src="img2" src="{% static 'images/logo3.png'%}">
+            </div>
+            {% endif %}
+
+            <div class="grid" id="main_info">
+                <br><br><br>
+                <div class="address">
+                    <b>{{room.address}} {{room.address_detail}}</b>
+                </div>
+                <div class="date">
+                    <b><strong>{{room.start_date}} ~ {{room.end_date}}</strong><b>까지 입주 가능
+                </div>
+            </div>
+
+            <div class="grid" id="cost">
+              <br>
+                {% if period == '1' %}
+                ￦ {{room.cost}}만 / 일
+                {% elif period == '2' %}
+                ￦ {{room.cost}}만 / 월
+                {% else %}
+                ￦ {{room.cost}}만 
+                {% endif %}
+            </div>
+        </div>
+
+        <div style="text-align:center;" class="alert alert-secondary" role="alert">
+          <strong style="font-size:15px; color:gray;">/</strong> 가격 <strong>/</strong>
+        </div>
+        <br><br><br><br>
+        <div id="cost">
+            {% if period == '1' %} <!-- 하루 단위 (장기대여) -->
+            <h3>장기대여를 원하시나요?<h3><br>
+            <h3>하루에 <h1><strong>{{room.cost}}</strong>만<h1><h3>으로 멋진 방을 이용해보세요!<br>
+            <h5>별도의 관리비가 존재할 수 있습니다<h5>
+            {% elif period == '2' %} <!-- 월 단위 (장기대여) -->
+            <h3>장기대여를 원하시나요?<h3><br>
+            <h3>월 <h1><strong>{{room.cost}}</strong>만원<h1><h3>으로 멋진 방을 이용해보세요!<br>
+            <h5>별도의 관리비가 존재할 수 있습니다<h5>
+            {% else %}
+            <h3>양도를 원하시나요?<h3><br>
+            <div id="cost-container" class="content"><br>
+              <div id="cost1">
+                  <h3>월세 <h1><strong>{{room.cost}}</strong>만원<h1><br>
+              </div>
+              <div id="cost2">
+                  <h3>보증금 <h1><strong>{{room.cost}}</strong>만원<h1>
+              </div>
+            </div>
+            <h3>으로 멋진 방을 양도받아보세요!<br>
+            <h5>별도의 관리비가 존재할 수 있습니다<h5>
+            {% endif %}
+            <br><br><br><br>
+            <br></div>
+        <div style="text-align:center;" class="alert alert-secondary" role="alert">
+          <strong style="font-size:15px; color:gray;">/</strong> 옵션 <strong>/</strong>
+        </div>
+        <br><br><br><br>
+        <div id="options" class="content"><br>
+          {% if room.wifiTorF %}
+          <img class="icon" src="{% static 'images/wifi.png'%}"><h1> </h1>
+          {% endif %}
+          {% if room.air_conditionerTorF %}
+          <img class="icon" src="{% static 'images/ice-crystal.png'%}"><h1> </h1>
+          {% endif %}
+          {% if room.tv %}
+          <img class="icon" src="{% static 'images/television.png'%}"><h1> </h1>
+          {% endif %}
+          {% if room.doorlock %}
+          <img class="icon" src="{% static 'images/padlock.png'%}"><h1> </h1>
+          {% endif %}
+          {% if room.washer %}
+          <img class="icon" src="{% static 'images/washing-machine.png'%}"><h1> </h1>
+          {% endif %}
+          {% if room.induction %}
+          <img class="icon" src="{% static 'images/stove.png'%}"><h1> </h1>
+          {% endif %}
+          {% if room.closet %}
+          <img class="icon" src="{% static 'images/hanger.png'%}"><h1> </h1>
+          {% endif %}
+          {% if room.desk %}
+          <img class="icon" src="{% static 'images/working-with-laptop.png'%}"><h1> </h1>
+          {% endif %}
+          {% if room.bed %}
+          <img class="icon" src="{% static 'images/bed.png'%}"><h1> </h1>
+          {% endif %}
+          {% if room.duplex %}
+          <img class="icon" src="{% static 'images/duplex.png'%}"><h1> </h1>
+          {% endif %}
+        <br><br><br><br><br>
+        <br></div>
+        <div style="text-align:center;" class="alert alert-secondary" role="alert">
+          <strong style="font-size:15px; color:gray;">/</strong> 세부 소개 <strong>/</strong>
+        </div>
+        <br><br><br><br>
+        <div id="info_detail" class="content"><br>
+          <h3>{{ room.title }}</h3>
+          <br><br>
+            <div id="detail">
+              <h5>{{room.detail}}</h5>
+            </div>
+          <br><br><br><br>
+          <br></div>
+        <div style="text-align:center;" class="alert alert-secondary" role="alert">
+          <strong style="font-size:15px; color:gray;">/</strong> 위치 <strong>/</strong>
+        </div>
+        <br><br><br><br>
+        <div id="location" class="content"><br>
+          <h3>{{room.address}} {{room.address_detail}}</h3>
+          <form>
+              <input type="text" id="addr" hidden value="{{room.address}}">
+          </form>
+          <textarea id="addr" hidden value="{{room.address}}">
+          <div id="map" style="width:100%;height:350px;"></div>
+          <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aef16b8477fba6c793fbab50f74c4636&libraries=services"></script>
+          <script type="text/javascript">
+            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+              mapOption = {
+                  center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+                  level: 3 // 지도의 확대 레벨
+              };  
+        
+          // 지도를 생성합니다    
+          var map = new kakao.maps.Map(mapContainer, mapOption); 
+        
+          // 주소-좌표 변환 객체를 생성합니다
+          var geocoder = new kakao.maps.services.Geocoder();
+        
+          // 주소로 좌표를 검색합니다
+          var x = {{room.address}};
+          alert(x);
+          geocoder.addressSearch(document.getElementById('addr'), function(result, status) {
+        
+              // 정상적으로 검색이 완료됐으면 
+              if (status === kakao.maps.services.Status.OK) {
+        
+                  var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+        
+                  // 결과값으로 받은 위치를 마커로 표시합니다
+                  var marker = new kakao.maps.Marker({
+                      map: map,
+                      position: coords
+                  });
+        
+                  // 인포윈도우로 장소에 대한 설명을 표시합니다
+                  var infowindow = new kakao.maps.InfoWindow({
+                      content: '<div style="width:150px;text-align:center;padding:6px 0;">우리회사</div>'
+                  });
+                  infowindow.open(map, marker);
+        
+                  // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+                  map.setCenter(coords);
+              } 
+          });    
+        </script>
+        
+          <br><br><br><br>
+          <br></div>
+    </div>
+    <br><br><br><br>
+</body>
+</html>
+
+{% endblock %}
